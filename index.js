@@ -91,54 +91,68 @@ function appMenu() {
 
   function addEngineer() {
     inquirer
-      .prompt([
+      .prompt([{
+        type: 'input',
+        name: 'gitHub',
+        message: 'What is your GitHub profile name?'
+      }
         //
         // TODO: YOUR CODE HERE
         // CREATE OBJECTS OF QUESTIONS FOR ENGINEER
         //
       ])
       .then((answers) => {
-        //
-        // TODO: YOUR CYOUR CODE HERE
-        // 1. CREATE A VARIABLE TO STORE THE ENGINEER OBJECT INSTANTIATED WITH THE ENGINEER CLASS, PASSING ANSWERS PROPERTIES AS INPUT AURGUMENTS
-        //    TO THE ENGINEER CLASS CONSTRUCTOR
-        // 2. ADD (PUSH) THE ENGINEER VARIABLE TO the teamMembers ARRAY
-        // 3. ADD (PUSH) THE ENGINERR ID TO THE idArray ARRAY
-        //
-
+        const engineer = new Engineer(
+          answers.engineerName,
+          answers.engineerId,
+          answers.engineerEmail,
+          answers.engineergitHub
+        );
+        teamMembers.push(engineer);
+        idArray.push(answers.engineerId);
         createTeam();
       });
-  }
+    //
+    // TODO: YOUR CYOUR CODE HERE
+    // 1. CREATE A VARIABLE TO STORE THE ENGINEER OBJECT INSTANTIATED WITH THE ENGINEER CLASS, PASSING ANSWERS PROPERTIES AS INPUT AURGUMENTS
+    //    TO THE ENGINEER CLASS CONSTRUCTOR
+    // 2. ADD (PUSH) THE ENGINEER VARIABLE TO the teamMembers ARRAY
+    // 3. ADD (PUSH) THE ENGINERR ID TO THE idArray ARRAY
+    //
 
-  function addIntern() {
-    inquirer
-      .prompt([
-        //
-        // TODO: YOUR CODE HERE
-        // CREATE OBJECTS OF QUESTIONS FOR INTERN
-        //
-      ])
-      .then((answers) => {
-        //
-        // TODO: YOUR CODE HERE
-        // 1. CREATE A VARIABLE TO STORE THE INTERN OBJECT INSTANTIATED WITH THE INTERN CLASS, PASSING ANSWERS PROPERTIES AS INPUT AURGUMENTS
-        //    TO THE INTERN CLASS CONSTRUCTOR
-        // 2. ADD (PUSH) THE INTERN VARIABLE TO the teamMembers ARRAY
-        // 3. ADD (PUSH) THE INTERN ID TO THE idArray ARRAY
-        //
-        createTeam();
-      });
-  }
+    createTeam();
+  });
+}
 
-  function buildTeam() {
-    // Create the output directory if the dist path doesn't exist
-    if (!fs.existsSync(DIST_DIR)) {
-      fs.mkdirSync(DIST_DIR);
-    }
-    fs.writeFileSync(distPath, render(teamMembers), 'utf-8');
-  }
+function addIntern() {
+  inquirer
+    .prompt([
+      //
+      // TODO: YOUR CODE HERE
+      // CREATE OBJECTS OF QUESTIONS FOR INTERN
+      //
+    ])
+    .then((answers) => {
+      //
+      // TODO: YOUR CODE HERE
+      // 1. CREATE A VARIABLE TO STORE THE INTERN OBJECT INSTANTIATED WITH THE INTERN CLASS, PASSING ANSWERS PROPERTIES AS INPUT AURGUMENTS
+      //    TO THE INTERN CLASS CONSTRUCTOR
+      // 2. ADD (PUSH) THE INTERN VARIABLE TO the teamMembers ARRAY
+      // 3. ADD (PUSH) THE INTERN ID TO THE idArray ARRAY
+      //
+      createTeam();
+    });
+}
 
-  createManager();
+function buildTeam() {
+  // Create the output directory if the dist path doesn't exist
+  if (!fs.existsSync(DIST_DIR)) {
+    fs.mkdirSync(DIST_DIR);
+  }
+  fs.writeFileSync(distPath, render(teamMembers), 'utf-8');
+}
+
+createManager();
 }
 
 appMenu();
